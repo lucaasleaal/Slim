@@ -252,6 +252,12 @@ class Request
         if (!isset($this->env['slim.input'])) {
             throw new \RuntimeException('Missing slim.input in environment variables');
         }
+        $angular = file_get_contents("php://input");
+        if (!empty($angular)){
+            $angular = json_decode($angular,true);
+        }else{
+            $angular = array();
+        }
         if (!isset($this->env['slim.request.form_hash'])) {
             $this->env['slim.request.form_hash'] = array();
             if ($this->isFormData() && is_string($this->env['slim.input'])) {
@@ -269,6 +275,8 @@ class Request
         if ($key) {
             if (isset($this->env['slim.request.form_hash'][$key])) {
                 return $this->env['slim.request.form_hash'][$key];
+            }elseif(!empty($angular) && isset($angular[$key])){
+                return $angular[$key];
             } else {
                 return $default;
             }

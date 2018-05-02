@@ -273,10 +273,13 @@ class Request
             }
         }
         if ($key) {
+            $multikey = explode('/',$key);
             if (isset($this->env['slim.request.form_hash'][$key])) {
                 return $this->env['slim.request.form_hash'][$key];
             }elseif(!empty($angular) && isset($angular[$key])){
                 return $angular[$key];
+            }elseif(!empty($angular) && isset($angular[$multikey[0]][$multikey[1]])){
+                return $angular[$multikey[0]][$multikey[1]];
             } else {
                 return $default;
             }

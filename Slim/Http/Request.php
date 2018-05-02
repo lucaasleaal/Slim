@@ -278,7 +278,7 @@ class Request
                 return $this->env['slim.request.form_hash'][$key];
             }elseif(!empty($angular) && isset($angular[$key])){
                 return $angular[$key];
-            }elseif(!empty($angular) && isset($angular[$multikey[0]][$multikey[1]])){
+            }elseif(!empty($angular) && isset($multikey[1]) && isset($angular[$multikey[0]][$multikey[1]])){
                 return $angular[$multikey[0]][$multikey[1]];
             } else {
                 return $default;
